@@ -2,6 +2,57 @@ import { useEffect, useState, useRef } from "react";
 import { GlobalContext } from "./GlobalContext";
 import { Building } from "../interfaces";
 
+const trivia: string[][] = [
+  [
+    "1 is the loneliest number.",
+    "1 is the number of moons orbiting Earth.",
+    "1 is the number of Gods in monotheism.",
+  ],
+  [
+    "2 is the first magic number in physics.",
+    "2 is the price in cents per acre the USA bought Alaska from Russia.",
+    "2 is the number of polynucleotide strands in a DNA double helix.",
+  ],
+  [
+    "3 is the cost in cents to make a $1 bill in the United States.",
+    "3 is the number of notes in a triad, the basic form of any chord.",
+    "3 is cans of Spam consumed every second in the United States.",
+  ],
+  [
+    "4 is the maximal number of horses in one row for carriage.",
+    "4 is the number of chambers the mammalian heart consists of.",
+    "4 is the number of nucleobase types in DNA and RNA – adenine, guanine, cytosine, thymine (uracil in RNA).",
+  ],
+  [
+    "5 is the holy number of Discordianism, as dictated by the Law of Fives.",
+    "5 is the number of babies born in a quintuplet.",
+    "5 is the most common number of gears for automobiles with manual transmission.",
+  ],
+  [
+    "6 is the number of ponies in the main cast of My Little Pony: Friendship is Magic.",
+    "6 is the number of feet below ground level a coffin is traditionally buried.",
+    "6 is the number of points on a Star of David.",
+  ],
+  [
+    "7 is the number of types of viruses according to the Baltimore classification.",
+    "7 is the number of SI base units.",
+    "7 is the number of colors of the rainbow.",
+  ],
+  [
+    "8 is the number of principles of Yong in Chinese calligraphy.",
+    "8 is the number of furlongs in a mile.",
+    "8 is the number of legs that arachnids have.",
+  ],
+  [
+    "9 is the number of innings in a regulation, non-tied game of baseball.",
+    "9 is the number of circles of Hell in Dante's Divine Comedy.",
+  ],
+  [
+    "10 is the highest score possible in Olympics gymnastics competitions.",
+    "10 is the number of hydrogen atoms in butane, a hydrocarbon.",
+    "10 is the number of official inkblots in the Rorschach inkblot test.",
+  ],
+];
 interface ProviderProps {
   children: JSX.Element | JSX.Element[];
 }
@@ -76,11 +127,12 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
     ]);
   };
 
-  const fetchNumberTrivia = async (number: number): Promise<string> => {
-    const res = await fetch(`http://numbersapi.com/${number}`);
-    const data = await res.text();
-    return data;
-  };
+  //al tener numbersAPI el protocolo http y no htpps salta un mensaje de error de mixed content diciendo que no se puede traer contenido http a una página https
+  // const fetchNumberTrivia = async (number: number): Promise<string> => {
+  //   const res = await fetch(`http://numbersapi.com/${number}`);
+  //   const data = await res.text();
+  //   return data;
+  // };
 
   useEffect(() => {
     const chil: Array<HTMLDivElement> = Array.from(
@@ -107,9 +159,14 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
   }, [buildings, sunset]);
 
   useEffect(() => {
-    fetchNumberTrivia(tallestBuilding).then((trivia) => {
-      setInfo(trivia);
-    });
+    // fetchNumberTrivia(tallestBuilding).then((trivia) => {
+    //   setInfo(trivia);
+    // });
+    setInfo(
+      trivia[tallestBuilding - 1][
+        Math.floor(Math.random() * trivia[tallestBuilding - 1].length)
+      ]
+    );
   }, [tallestBuilding, buildings]);
 
   return (
