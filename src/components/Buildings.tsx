@@ -7,7 +7,7 @@ const Buildings = () => {
     useContext(GlobalContext);
 
   return (
-    <div className={`${!sunset && "dawn"} buildings-scenary`}>
+    <div className={`${!sunset && "dawn"} buildings-scenary mt-5`}>
       <div
         className="buildings d-flex align-items-end justify-content-between mx-auto px-1"
         ref={buildingsContainer}

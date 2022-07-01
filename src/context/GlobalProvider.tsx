@@ -89,11 +89,11 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
     chil.forEach((b, index) => {
       b.style.height = `${10 * buildings[index].height}%`;
       // tomamos los edificios anteriores al actual en modo atardecer y los suigientes en amanecer
-      const prevSiblings = sunset
+      const prevSiblings: Building[] = sunset
         ? buildings.slice(0, index)
         : buildings.slice(index + 1, buildings.length);
       //vemos si todos los anteriores son más bajos que el actual
-      const higherThanPrevious = prevSiblings.every(
+      const higherThanPrevious: boolean = prevSiblings.every(
         (s) => s.height < buildings[index].height
       );
       if (higherThanPrevious) {
@@ -102,7 +102,7 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
         b.style.backgroundColor = "gray";
       }
     });
-    const heights = buildings.map((b) => b.height);
+    const heights: number[] = buildings.map((b) => b.height);
     setTallestBuilding(Math.max(...heights));
   }, [buildings, sunset]);
 

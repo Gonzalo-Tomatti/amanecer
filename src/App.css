@@ -31,7 +31,7 @@ h5 {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #212529;
+  background-color: rgb(234, 229, 224);
 }
 
 /* cuando el tema es light cambia a fondo blanco */
@@ -47,6 +47,9 @@ h5 {
 /* cuando el tema es negro cambia a gris  */
 .bg-dark ::-webkit-scrollbar-thumb {
   background-color: rgb(84, 84, 84);
+}
+.bg-dark ::-webkit-scrollbar-track {
+  background-color: #212529;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -109,6 +112,7 @@ h5 {
   width: 2rem;
   height: 2rem;
   border: transparent;
+  outline: none;
 }
 
 .sun {
