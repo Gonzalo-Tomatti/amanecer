@@ -18,10 +18,17 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
     { pos: 6, height: 1 },
     { pos: 7, height: 1 },
   ]);
+  const [info, setInfo] = useState<string>("");
+  const [tallestBuilding, setTallestBuilding] = useState<number>(1);
   const buildingsContainer = useRef(null) as any;
+  const [sunset, setSunset] = useState<boolean>(true);
 
   const changeMode = (): void => {
     setDarkMode(!darkMode);
+  };
+
+  const changeSunset = (): void => {
+    setSunset(!sunset);
   };
 
   const changeHeight = (height: number, pos: number): void => {
@@ -34,14 +41,57 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
     }
   };
 
+  const randomize = (): void => {
+    setBuildings(
+      buildings.map((b) => {
+        return {
+          pos: b.pos,
+          height: Math.ceil(Math.random() * 10),
+        };
+      })
+    );
+  };
+
+  const reset = (): void => {
+    setBuildings(
+      buildings.map((b) => {
+        return {
+          pos: b.pos,
+          height: 1,
+        };
+      })
+    );
+  };
+
+  const addBuilding = (): void => {
+    setBuildings((prevBuildings) => [
+      ...prevBuildings,
+      { pos: prevBuildings.length, height: 1 },
+    ]);
+  };
+
+  const deleteBuilding = (): void => {
+    setBuildings((prevBuildings) => [
+      ...prevBuildings.slice(0, prevBuildings.length - 1),
+    ]);
+  };
+
+  const fetchNumberTrivia = async (number: number): Promise<string> => {
+    const res = await fetch(`http://numbersapi.com/${number}`);
+    const data = await res.text();
+    return data;
+  };
+
   useEffect(() => {
     const chil: Array<HTMLDivElement> = Array.from(
       buildingsContainer.current.children
     );
     chil.forEach((b, index) => {
       b.style.height = `${10 * buildings[index].height}%`;
-      // tomamos los edificios anteriores al actual
-      const prevSiblings = buildings.slice(0, index);
+      // tomamos los edificios anteriores al actual en modo atardecer y los suigientes en amanecer
+      const prevSiblings = sunset
+        ? buildings.slice(0, index)
+        : buildings.slice(index + 1, buildings.length);
       //vemos si todos los anteriores son más bajos que el actual
       const higherThanPrevious = prevSiblings.every(
         (s) => s.height < buildings[index].height
@@ -52,16 +102,31 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
         b.style.backgroundColor = "gray";
       }
     });
-  }, [buildings]);
+    const heights = buildings.map((b) => b.height);
+    setTallestBuilding(Math.max(...heights));
+  }, [buildings, sunset]);
+
+  useEffect(() => {
+    fetchNumberTrivia(tallestBuilding).then((trivia) => {
+      setInfo(trivia);
+    });
+  }, [tallestBuilding, buildings]);
 
   return (
     <GlobalContext.Provider
       value={{
-        darkMode,
-        buildings,
         changeHeight,
         changeMode,
+        reset,
+        randomize,
+        addBuilding,
+        deleteBuilding,
+        changeSunset,
+        buildings,
+        darkMode,
         buildingsContainer,
+        info,
+        sunset,
       }}
     >
       {children}

@@ -1,42 +1,75 @@
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:400|Yeseva+One:400");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
-  height: 100vh;
+  font-family: "Josefin Sans", sans-serif;
 }
 
-.buildings {
-  height: 70vh;
-  width: 100vw;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Yeseva One", sans-serif;
 }
 
-.building {
-  background-color: gray;
-  height: 10%;
-  transition: all 0.7s ease-in-out;
+.wrapper {
+  min-height: 100vh;
+  display: table;
+  width: 100%;
+  position: relative;
 }
 
-.input {
-  border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-.mode-btn {
-  width: 3rem;
-  background-color: white;
-  height: 2rem;
+::-webkit-scrollbar-track {
+  background-color: #212529;
 }
 
-.mode-btn span {
-  width: 1.5rem;
-  height: 100%;
-  background-color: black;
+/* cuando el tema es light cambia a fondo blanco */
+.bg-light ::-webkit-scrollbar-track {
+  background-color: #f8f9fa;
 }
 
+::-webkit-scrollbar-thumb {
+  background-color: rgb(45, 45, 43);
+  border-radius: 0.2rem;
+}
+
+/* cuando el tema es negro cambia a gris  */
+.bg-dark ::-webkit-scrollbar-thumb {
+  background-color: rgb(84, 84, 84);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(45, 45, 43, 0.8);
+}
+
+.bg-dark ::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(84, 84, 84, 0.8);
+}
+
+/* HEADER */
+.btn-container {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+}
 .switch-btn {
   position: relative;
   width: 1.5rem;
   height: 0.8rem;
-  border-radius: 20%;
+  border-radius: 45%;
   border: black 1px solid;
+  padding: 0;
 }
 .switch {
   background-color: black;
@@ -48,9 +81,52 @@ body {
   margin: 0;
   border-radius: 50%;
   transition: all 0.3s ease-in-out;
-  border: black 1px solid;
 }
 
 .slide .switch {
   left: 50%;
+}
+
+/* BUILDINGS */
+.buildings-scenary {
+  position: relative;
+}
+.buildings {
+  height: 70vh;
+  width: 70vw;
+  overflow-x: scroll;
+}
+
+.building {
+  background-color: gray;
+  height: 10%;
+  width: 3rem;
+  transition: all 0.7s ease-in-out;
+}
+
+.input {
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  border: transparent;
+}
+
+.sun {
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  left: 3rem;
+  bottom: 0;
+  display: none;
+}
+
+.dawn .sun {
+  right: 3rem;
+  left: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .sun {
+    display: block;
+  }
 }

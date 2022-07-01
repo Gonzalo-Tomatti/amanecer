@@ -4,9 +4,9 @@ import { GlobalContext } from "../context/GlobalContext";
 const Header = () => {
   const { darkMode, changeMode } = useContext(GlobalContext);
   return (
-    <div>
-      <h1>Amanecer</h1>
-      <div className="d-flex align-items-center">
+    <div className="pt-2 container">
+      <h1>Atardecer</h1>
+      <div className="d-flex align-items-center btn-container">
         {darkMode ? "dark" : "light"}
         <button
           onClick={changeMode}
@@ -16,8 +16,8 @@ const Header = () => {
         </button>
       </div>
       <p>
-        Introduce ocho números (1-10) para cambiar la altura de los edificios.
-        Los edificios que tengan vista del amanecer se volverán verdes.
+        Introduce números (1-10) para cambiar la altura de los edificios. Los
+        edificios que tengan vista del atardecer se volverán verdes.
       </p>
     </div>
   );
